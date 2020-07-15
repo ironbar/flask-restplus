@@ -1,7 +1,8 @@
 from flask_restplus import Api
 
-from .cat import api as cat_api
+from .cat import api as cat_api, register_resources
 from .dog import api as dog_api
+from .fake_backend import FakeBackend
 
 api = Api(
     title='Zoo API',
@@ -9,5 +10,7 @@ api = Api(
     description='A simple demo API',
 )
 
-api.add_namespace(cat_api)
+backend = FakeBackend()
+register_resources(backend)
+api.add_namespace(cat_api, path='/')
 api.add_namespace(dog_api)
